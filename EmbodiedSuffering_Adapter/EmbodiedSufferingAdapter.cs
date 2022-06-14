@@ -29,36 +29,36 @@ using System.Threading.Tasks;
 
 namespace BH.Adapter.EmbodiedSuffering
 {
-    public partial class EmbodiedSufferingAdapter : BHoMAdapter
-    {
-        /***************************************************/
-        /**** Constructors                              ****/
-        /***************************************************/
+    //public partial class EmbodiedSufferingAdapter : BHoMAdapter
+    //{
+    //    /***************************************************/
+    //    /**** Constructors                              ****/
+    //    /***************************************************/
 
-        public EmbodiedSufferingAdapter()
-        {
-            //Sets as a constant string, located in the Convert class
-            AdapterIdName = Convert.AdapterIdName;
+    //    public EmbodiedSufferingAdapter()
+    //    {
+    //        //Sets as a constant string, located in the Convert class
+    //        AdapterIdName = Convert.AdapterIdName;
 
-            // If your toolkit needs to define this.AdapterComparers and or this.DependencyTypes,
-            // this constructor has to populate those properties.
-            // See the wiki for more information.
-        }
+    //        // If your toolkit needs to define this.AdapterComparers and or this.DependencyTypes,
+    //        // this constructor has to populate those properties.
+    //        // See the wiki for more information.
+    //    }
 
-        // You can add any other constructors that take more inputs here. 
+    //    // You can add any other constructors that take more inputs here. 
 
-        /***************************************************/
-        /**** Private  Fields                           ****/
-        /***************************************************/
+    //    /***************************************************/
+    //    /**** Private  Fields                           ****/
+    //    /***************************************************/
 
-        // You can add any private variable that should be in common to any other adapter methods here.
-        // If you need to add some private methods, please consider first what their nature is:
-        // if a method does not need any external call (API call, connection call, etc.)
-        // we place them in the Engine project, and then reference them from the Adapter.
-        // See the wiki for more information.
+    //    // You can add any private variable that should be in common to any other adapter methods here.
+    //    // If you need to add some private methods, please consider first what their nature is:
+    //    // if a method does not need any external call (API call, connection call, etc.)
+    //    // we place them in the Engine project, and then reference them from the Adapter.
+    //    // See the wiki for more information.
 
-        /***************************************************/
+    //    /***************************************************/
 
 
-    }
+    //}
 }

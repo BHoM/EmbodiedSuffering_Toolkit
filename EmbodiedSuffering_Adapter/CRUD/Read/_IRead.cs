@@ -21,7 +21,6 @@
  */
 
 using BH.oM.Adapter;
-using BH.oM.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,30 +30,30 @@ using System.Threading.Tasks;
 
 namespace BH.Adapter.EmbodiedSuffering
 {
-    public partial class EmbodiedSufferingAdapter
-    {
-        /***************************************************/
-        /**** Adapter overload method                   ****/
-        /***************************************************/
+    //public partial class EmbodiedSufferingAdapter
+    //{
+    //    /***************************************************/
+    //    /**** Adapter overload method                   ****/
+    //    /***************************************************/
 
-        // This method gets called when appropriate by the Pull method contained in the base Adapter class.
-        // It gets called once per each Type.
-        protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids, ActionConfig actionConfig = null)
-        {
-            // Preferrably, different Create logic for different object types should go in separate methods.
-            // We achieve this by using the ICreate method to only dynamically dispatching to *type-specific Create implementations*
-            // In other words:
-            // if (type == typeof(SomeType1))
-            //     return ReadSomeType1(ids as dynamic);
-            // else if (type == typeof(SomeType2))
-            //     return ReadSomeType2(ids as dynamic);
-            // else if (type == typeof(SomeType3))
-            //     return ReadSomeType3(ids as dynamic);
+    //    // This method gets called when appropriate by the Pull method contained in the base Adapter class.
+    //    // It gets called once per each Type.
+    //    protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids, ActionConfig actionConfig = null)
+    //    {
+    //        // Preferrably, different Create logic for different object types should go in separate methods.
+    //        // We achieve this by using the ICreate method to only dynamically dispatching to *type-specific Create implementations*
+    //        // In other words:
+    //        // if (type == typeof(SomeType1))
+    //        //     return ReadSomeType1(ids as dynamic);
+    //        // else if (type == typeof(SomeType2))
+    //        //     return ReadSomeType2(ids as dynamic);
+    //        // else if (type == typeof(SomeType3))
+    //        //     return ReadSomeType3(ids as dynamic);
 
-            return new List<IBHoMObject>();
-        }
+    //        return new List<IBHoMObject>();
+    //    }
 
-        /***************************************************/
+    //    /***************************************************/
 
-    }
+    //}
 }
