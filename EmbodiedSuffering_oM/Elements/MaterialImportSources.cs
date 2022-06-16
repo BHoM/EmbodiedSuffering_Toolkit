@@ -25,16 +25,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using BH.oM.Base;
 
-namespace BH.oM.EmbodiedSuffering
+
+namespace BH.oM.EmbodiedSuffering.Elements
 {
-    // You can define your own Toolkit-specific types in this namespace.
+    [Description("An Embodied Suffering object used for defining the import ratios per country for a particular material, utilised in a specific country (e.g. the United States gets all of its timber from Brazil, or that it is 50% from Brazil and 50% from Vietnam.)")]
+    public class MaterialImportSources : BHoMObject
+    {
+        [Description("List of countries from which the material was imported.")]
+        public virtual Countries ExportCountries { get; set; } = Countries.Undefined;
 
-    // public class SomeObject : BHoMObject
-    // {
-    // // See examples in the BHoM repo and the wiki to see how we define types.
-    // // Generally, all properties should be public and have public getter and setter.
-    // // No constructor should be specified as we auto generate it from the class properties.
-    // // If a specific instantiaton method is needed, we categorise it as an "Engine/Create" method.
-    // }
+        [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is repsponsible for 50% of the imports of steel to a particular country that value would be 0.5.")]
+        public virtual List<double> ImportRatios { get; set; } = new List<double>();
+
+        [Description("The name of the country in which the imported materials are utilised.")]
+        public virtual Countries ImportCountry { get; set; } = Countries.Undefined;
+
+    }
 }
