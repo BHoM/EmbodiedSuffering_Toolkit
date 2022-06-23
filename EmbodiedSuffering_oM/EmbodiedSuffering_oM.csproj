@@ -54,8 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elements\Enums\Material.cs" />
+    <Compile Include="Elements\Slavery.cs" />
+    <Compile Include="Elements\MaterialImportSources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SomeObjectType.cs" />
+    <Compile Include="Elements\Enums\Country.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -31,17 +31,17 @@ using BH.oM.Base;
 
 namespace BH.oM.EmbodiedSuffering.Elements
 {
-    [Description("An Embodied Suffering object used for defining the import ratios per country for a particular material, utilised in a specific country (e.g. the United States gets all of its timber from Brazil, or that it is 50% from Brazil and 50% from Vietnam.)")]
-    public class MaterialImportSources : BHoMObject
+    [Description("An Embodied Suffering object used for defining the prevalence of modern slavery in each country's population. Measured by the number of victims per 1000 people.")]
+    public class Slavery : BHoMObject
     {
-        [Description("List of countries from which the material was imported.")]
-        public virtual Country ExportCountries { get; set; } = Country.Undefined;
+        [Description("The number of enslaved people per 1000 population.")]
+        public virtual double NumberOfEnslavedPeople { get; set; } = 0;
 
-        [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is repsponsible for 50% of the imports of steel to a particular country that value would be 0.5.")]
-        public virtual List<double> ImportRatios { get; set; } = new List<double>();
+        [Description("Name of the country with which the modern slavery metrics are associated.")]
+        public virtual Country Country { get; set; } = Country.Undefined;
 
-        [Description("The name of the country in which the imported materials are utilised.")]
-        public virtual Country ImportCountry { get; set; } = Country.Undefined;
+        [Description("The name of the material with which the modern slavery metrics are associated. For example, the timber industry in Brazil. If no country is defined, and the metrics are general, this field shall be marked as undefined.")]
+        public virtual Material Material { get; set; } = Material.Undefined;
 
     }
 }

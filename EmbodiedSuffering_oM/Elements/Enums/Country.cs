@@ -25,7 +25,7 @@ using System.ComponentModel;
 namespace BH.oM.EmbodiedSuffering.Elements
 {
     [Description("A list of countries around the globe derived from: https://www.worldometers.info/geography/alphabetical-list-of-countries/")]
-    public enum Countries
+    public enum Country
     {
         Undefined,
         Afghanistan,

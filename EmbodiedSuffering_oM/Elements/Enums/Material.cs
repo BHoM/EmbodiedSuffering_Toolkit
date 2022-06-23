@@ -20,28 +20,32 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
-using BH.oM.Base;
-
 
 namespace BH.oM.EmbodiedSuffering.Elements
 {
-    [Description("An Embodied Suffering object used for defining the import ratios per country for a particular material, utilised in a specific country (e.g. the United States gets all of its timber from Brazil, or that it is 50% from Brazil and 50% from Vietnam.)")]
-    public class MaterialImportSources : BHoMObject
+    [Description("A list of raw materials from which building materials are created.")]
+    public enum Material
     {
-        [Description("List of countries from which the material was imported.")]
-        public virtual Country ExportCountries { get; set; } = Country.Undefined;
-
-        [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is repsponsible for 50% of the imports of steel to a particular country that value would be 0.5.")]
-        public virtual List<double> ImportRatios { get; set; } = new List<double>();
-
-        [Description("The name of the country in which the imported materials are utilised.")]
-        public virtual Country ImportCountry { get; set; } = Country.Undefined;
-
+        Undefined,
+        Aggregate,
+        Aluminium,
+        Asphalt,
+        Brass,
+        Cement,
+        Ceramic,
+        ClayBricks,
+        Concrete,
+        Copper,
+        Glass,
+        Iron,
+        Lithium,
+        Plastics,
+        Rubber,
+        Sand,
+        Silicon,
+        Steel,
+        Timber,
+        Zinc
     }
 }
