@@ -20,21 +20,28 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BH.oM.Base;
+using System.ComponentModel;
 
 namespace BH.oM.EmbodiedSuffering
 {
     // You can define your own Toolkit-specific types in this namespace.
 
-    // public class SomeObject : BHoMObject
-    // {
-    // // See examples in the BHoM repo and the wiki to see how we define types.
-    // // Generally, all properties should be public and have public getter and setter.
-    // // No constructor should be specified as we auto generate it from the class properties.
-    // // If a specific instantiaton method is needed, we categorise it as an "Engine/Create" method.
-    // }
+    public class SomeObject : BHoMObject
+    {
+        /***************************************************/
+        /****            Public Properties              ****/
+        /***************************************************/
+
+        [Description("This is a test description of Number.")]
+        public virtual double Number { get; set; }
+
+        [Description("This is a test description of String.")]
+        public virtual string String { get; set; }
+
+        [Description("This is a test description of Int.")]
+        public virtual int Int { get; set; }
+
+        /***************************************************/
+    }
 }
