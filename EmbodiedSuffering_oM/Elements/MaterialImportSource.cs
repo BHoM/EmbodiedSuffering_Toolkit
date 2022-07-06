@@ -35,10 +35,10 @@ namespace BH.oM.EmbodiedSuffering.Elements
     public class MaterialImportSources : BHoMObject
     {
         [Description("The name of the material that is imported to a particular country from other countries.")]
-        public virtual Country Material { get; set; } = Country.Undefined;
+        public virtual Material Material { get; set; } = Material.Undefined;
 
         [Description("List of countries from which the material was imported.")]
-        public virtual Country ExportCountries { get; set; } = Country.Undefined;
+        public virtual List<Country> ExportCountries { get; set; } = new List<Country>();
 
         [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is repsponsible for 50% of the imports of steel to a particular country that value would be 0.5.")]
         public virtual List<double> ImportRatios { get; set; } = new List<double>();
