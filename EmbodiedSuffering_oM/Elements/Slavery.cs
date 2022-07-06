@@ -20,28 +20,28 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.ComponentModel;
+using BH.oM.Base;
 
-namespace BH.oM.EmbodiedSuffering
+
+namespace BH.oM.EmbodiedSuffering.Elements
 {
-    // You can define your own Toolkit-specific types in this namespace.
-
-    public class SomeObject : BHoMObject
+    [Description("An Embodied Suffering object used for defining the prevalence of modern slavery in each country's population. Measured by the number of victims per 1000 people.")]
+    public class Slavery : BHoMObject
     {
-        /***************************************************/
-        /****            Public Properties              ****/
-        /***************************************************/
+        [Description("The number of enslaved people per 1000 population.")]
+        public virtual double NumberOfEnslavedPeople { get; set; } = 0;
 
-        [Description("This is a test description of Number.")]
-        public virtual double Number { get; set; }
+        [Description("Name of the country with which the modern slavery metrics are associated.")]
+        public virtual Country Country { get; set; } = Country.Undefined;
 
-        [Description("This is a test description of String.")]
-        public virtual string String { get; set; }
+        [Description("The name of the material with which the modern slavery metrics are associated. For example, the timber industry in Brazil. If no country is defined, and the metrics are general, this field shall be marked as undefined.")]
+        public virtual Material Material { get; set; } = Material.Undefined;
 
-        [Description("This is a test description of Int.")]
-        public virtual int Int { get; set; }
-
-        /***************************************************/
     }
 }
