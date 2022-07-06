@@ -34,6 +34,9 @@ namespace BH.oM.EmbodiedSuffering.Elements
     [Description("An Embodied Suffering object used for defining the import ratios per country for a particular material, utilised in a specific country (e.g. the United States gets all of its timber from Brazil, or that it is 50% from Brazil and 50% from Vietnam.)")]
     public class MaterialImportSources : BHoMObject
     {
+        [Description("The name of the material that is imported to a particular country from other countries.")]
+        public virtual Country Material { get; set; } = Country.Undefined;
+
         [Description("List of countries from which the material was imported.")]
         public virtual Country ExportCountries { get; set; } = Country.Undefined;
 
