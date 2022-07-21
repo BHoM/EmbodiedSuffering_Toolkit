@@ -51,6 +51,10 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Library_Engine">
+      <HintPath>..\..\..\..\..\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Reflection_Engine">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
@@ -66,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Compute\" />
     <Folder Include="Create\" />
     <Folder Include="Modify\" />
     <Folder Include="Query\" />
@@ -77,6 +80,9 @@
       <Name>EmbodiedSuffering_oM</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Compute\SufferingIndex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
