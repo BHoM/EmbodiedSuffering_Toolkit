@@ -52,6 +52,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Library_Engine">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
