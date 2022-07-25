@@ -40,44 +40,74 @@ namespace BH.Engine.EmbodiedSuffering
         [Description("Returns the Suffering Index based on Material Imports data.")]
         [Input("numberOfEnslavedPeople", "A list of values from the GlobalSlaveryIndex dataset for the country/countries you wish to evaluate.")]
         [Input("materialImportSource", "The MaterialImportSources dataset or object used to calculate the resultant index value.")]
-        [Input("slaveryData", "The Slavery data used to calculate the resultant index value.")]
-        [Input("name", "The name of the SufferingIndex.")]
-        [Output("sufferingIndex", "The SufferingIndex per import location and slavery data.")]
-        public static List<double> SufferingIndex(List<double> numberOfEnslavedPeople, MaterialImportSources materialImportData, Slavery slaveryData, string name)
+        [Input("acceptableThreshold", "The acceptable value of Number of Enslaved People to be considered in the calculation. Values found in the NumberOfEnslavedPeople input above this threshold will not be considered.")]
+        [MultiOutput(0, "sufferingIndex", "The SufferingIndex per import location and slavery data.")]
+        [MultiOutput(1, "culledCountries", "Countries removed from the calculation due to insufficient data.")]
+        [MultiOutput(2, "invalidCountries", "Countries that had no data for NumberOfEnslavedPeople.")]
+        public static Output<double, List<string>, List<string>> SufferingIndex(List<double> numberOfEnslavedPeople, MaterialImportSources materialImportSources, double acceptableThreshold)
         {
-            // Issues that need to be resolved before merge: 
-            // slaveryData is not being used and is currently implemented prior to method call by the user (manual)
-            // name is not being used
-            // What is the desired output of this method. A list of doubles, a single double, a list of objects?
+            double sufferingIndex = 0;
+            List<double> importRatios = materialImportSources.ImportRatios.ToList();
+            List<List<Country>> exportCountries = new List<List<Country>>();
+            List<string> culledCountries = new List<string>();
+            List<string> invalidCountries = new List<string>();
 
-            List<double> sufferingIndex = new List<double>();
-            List<double> importRatios = materialImportData.ImportRatios;
+            // List length check: Fail the calculation if the lists are of unequal lengths
+            if (numberOfEnslavedPeople.Count != importRatios.Count)
+            {
+                int numCount = numberOfEnslavedPeople.Count;
+                int ratiosCount = importRatios.Count;
+                BH.Engine.Base.Compute.RecordError("The provided list's lengths to do correspond as expected." + $"\nNumberOfEnslavedPeople count = {numCount}" + $"\nImportRatios count = {ratiosCount}. \nPlease update your data and try again.");
+            } else
+            {
+                // Remove after debugging is complete
+                BH.Engine.Base.Compute.RecordNote("Lists are the same length, proceeding to threshold check.");
+            }
 
-            // null check and return 0 for numPeople
+            // Add countries to ImportCountries[]
+            for (int i = 0; i < materialImportSources.ImportRatios.Count; i++)
+            {
+                exportCountries.Add(materialImportSources.ExportCountries);
+            }
+
+            // Pass a list of string import countries
+            // This is used in the threshold check
+            List<string> importCountriesAsStrings = exportCountries.ConvertAll(x => x.ToString());
+
+            // Threshold check: Toss anything above the input threshold into badCountries[]
+            for (int i = 0; i < numberOfEnslavedPeople.Count; i++)
+            {
+                if (numberOfEnslavedPeople[i] > acceptableThreshold)
+                {
+                    culledCountries.Add(importCountriesAsStrings[i]);
+                    numberOfEnslavedPeople.Remove(numberOfEnslavedPeople[i]);
+                    BH.Engine.Base.Compute.RecordWarning("Some countries were removed from your calculation due to exceeding the acceptableThreshold requirement. \nPlease review them from the CulledCountries output. \nThe calculation will now proceed with all remaining countries.");
+                }
+            }
+
+            // Data validitiy check: Toss anything with 0 or NaN into invalidCountries[]
             for (int i = 0; i < numberOfEnslavedPeople.Count; i++)
             {
                 if (numberOfEnslavedPeople[i] == double.NaN)
                 {
                     numberOfEnslavedPeople[i] = 0;
+                    invalidCountries.Add(importCountriesAsStrings[i]);
+                    BH.Engine.Base.Compute.RecordWarning("Some country's number of enslaved people was defaulted to zero due to missing or invalid data. \nPlease review them from the invalidCountries output. \nThe calculation will now proceed with all remaining countries.");
                 }
             }
 
-            // check if the lists are the same length
-            if (numberOfEnslavedPeople.Count != importRatios.Count)
-            {
-                BH.Engine.Base.Compute.RecordError("The provided list's lengths to do correspond as expected. Results cannot be computed.");
-                return sufferingIndex; 
-            }
-
-            // multiply values
+            // Calculation: Multiply the lists of number of people by the import ratios
             for (int i = 0; i < numberOfEnslavedPeople.Count; i++)
             {
-                sufferingIndex.Add(numberOfEnslavedPeople[i] * materialImportData.ImportRatios[i]);
-            }
+                sufferingIndex += (numberOfEnslavedPeople[i] * materialImportSources.ImportRatios[i]);
+            } 
 
-            List<string> exportCountries = (List<string>)materialImportData.ExportCountries.ToList().Select(x => x.ToString());
-
-            return sufferingIndex;
+            return new Output<double, List<string>, List<string>>
+            {
+                Item1 = sufferingIndex,
+                Item2 = culledCountries,
+                Item3 = invalidCountries
+            };
         }
         /***************************************************/
 
