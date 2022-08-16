@@ -32,10 +32,19 @@ using BH.oM.Base;
 namespace BH.oM.EmbodiedSuffering.Elements
 {
     [Description("An Embodied Suffering object used for defining the prevalence of modern slavery in each country's population. Measured by the number of victims per 1000 people.")]
-    public class Slavery : BHoMObject
+    public class LabourExploitationRisk : BHoMObject
     {
-        [Description("The number of enslaved people per 1000 population.")]
-        public virtual double NumberOfEnslavedPeople { get; set; } = 0;
+        [Description("The prevalence of population involved in modern slavery, measured in victims per 1000 population.")]
+        public virtual double VictimsOfModernSlavery { get; set; } = double.NaN;
+
+        [Description("Measurement of worker's rights violations, on a scale from 1 to 6 (6 being the most egregious.) Based on scale provided by the International Trade Union Confederation.")]
+        public virtual int FreedomOfAssociation { get; set; } = 0;
+
+        [Description("Commentary provided by the working population associated with a particular country, industry or manufacturer.")]
+        public virtual string WorkerVoice { get; set; } = "";
+
+        [Description("Name of the manufacturer with which the modern slavery metrics are associated.")]
+        public virtual string Manufacturer { get; set; } = "";
 
         [Description("Name of the country with which the modern slavery metrics are associated.")]
         public virtual Country Country { get; set; } = Country.Undefined;
