@@ -31,13 +31,13 @@ using BH.oM.Base;
 
 namespace BH.oM.EmbodiedSuffering.Elements
 {
-    [Description("An Embodied Suffering object used for defining the prevalence of modern slavery in each country's population. Measured by the number of victims per 1000 people.")]
+    [Description("An object that estimates the risk of labour exploitation by measuring the number of victims of modern slavery per 1000 people, violations against workers' rights (freedom of association), monitoring worker voice, and other socioeconomic factors that lead to exploitation.")]
     public class LabourExploitationRisk : BHoMObject
     {
-        [Description("The prevalence of population involved in modern slavery, measured in victims per 1000 population.")]
+        [Description("The prevalence of individuals involved in modern slavery, measured in victims per 1000 population.")]
         public virtual double VictimsOfModernSlavery { get; set; } = double.NaN;
 
-        [Description("Measurement of worker's rights violations, on a scale from 1 to 6 (6 being the most egregious.) Based on scale provided by the International Trade Union Confederation.")]
+        [Description("Measurement of workers' rights violations, on a scale from 1 to 6 (6 being the most egregious.) Based on scale provided by the International Trade Union Confederation.")]
         public virtual int FreedomOfAssociation { get; set; } = 0;
 
         [Description("Commentary provided by the working population associated with a particular country, industry or manufacturer.")]
