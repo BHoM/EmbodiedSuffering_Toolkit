@@ -43,6 +43,9 @@ namespace BH.oM.EmbodiedSuffering.Elements
         [Description("Commentary provided by the working population associated with a particular country, industry or manufacturer.")]
         public virtual string WorkerVoice { get; set; } = "";
 
+        [Description("This value describes a socioeconomic factor that leads to labour exploitation.")]
+        public virtual string SocioEconomicIndicator { get; set; } = "";
+
         [Description("Name of the manufacturer with which the modern slavery metrics are associated.")]
         public virtual string Manufacturer { get; set; } = "";
 
