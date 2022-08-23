@@ -50,8 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\Enums\Country.cs" />
-    <Compile Include="Elements\Slavery.cs" />
-    <Compile Include="Elements\MaterialImportSource.cs" />
+    <Compile Include="Elements\LabourExploitationRisk.cs" />
+    <Compile Include="Elements\MaterialImportSources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Elements\Enums\Material.cs" />
   </ItemGroup>
