@@ -113,8 +113,6 @@ namespace BH.oM.EmbodiedSuffering.Elements
         HolySee,
         Honduras,
         HeardAndMcDonaldIsland,
-        HolySee,
-        Honduras,
         HongKong,
         Hungary,
         Iceland,
