@@ -24,7 +24,6 @@ using BH.oM.Base;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-
 namespace BH.oM.EmbodiedSuffering.Elements
 {
     [Description("An Embodied Suffering object used for defining the import ratios per country for a particular material, utilised in a specific country (e.g. the United States gets all of its timber from Brazil, or that it is 50% from Brazil and 50% from Vietnam.)")]
@@ -37,9 +36,9 @@ namespace BH.oM.EmbodiedSuffering.Elements
         public virtual List<Country> ExportCountries { get; set; } = new List<Country>();
 
         [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is responsible for 50% of the imports of steel to a particular country that value would be 0.5. The values do not necessarily need to add to 1.0.")]
-        public virtual List<double> ImportRatios { get; set; } = new List<double>();
+        public virtual double ImportRatios { get; set; } = double.NaN;
 
         [Description("The name of the country in which the imported materials are utilised.")]
-        public virtual Country ImportCountry { get; set; } = Country.Undefined;
+        public virtual Country ImportCountry { get; set; } = Country.Undefined; // Wouldn't this need to be a list to match the possibility of multiple import ratios? 
     }
 }
