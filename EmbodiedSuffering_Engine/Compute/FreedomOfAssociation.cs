@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace BH.Engine.Geometry
+namespace BH.Engine.EmbodiedSuffering
 {
     public static partial class Compute
     {
@@ -34,19 +34,20 @@ namespace BH.Engine.Geometry
         /****   Public Methods                          ****/
         /***************************************************/
 
-        [Description("Create a mesh from selected faces of an existing mesh.")]
-        [Input("mass", "Description.")]
-        [Input("labourExploitationRisk", "Dataset.")]
-        [Input("materials", "materials.")]
-        [Input("ratios", "ratios.")]
-        [Output("quantity", "Mesh composed of the faces and the vertices in those faces.")]
-        public static double FreedomOfAssociation(double mass, LabourExploitationRisk labourRisk, List<MaterialImportSources>materials, List<double>ratios)
+        [Description("Calculate the FreedomOfAssociation for a specified country.")]
+        [Input("mass", "The total mass of the object or assembly.")]
+        [Input("labourExploitationRisk", "Labour Exploitation Risk data for a specific country.")]
+        [Input("materials", "Material Import Sources objects. Please provide a ratio summary for each material specified.")]
+        [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each material you provide.")]
+        [Output("quantity", "This needs a description of how to interpret the output.")]
+        public static List<double> FreedomOfAssociation(double mass, LabourExploitationRisk labourRisk, List<MaterialImportSources>materials, List<double>ratios)
         {
             if (materials.Count() == ratios.Count)
             {
                 List<double> massesPerRatio = new List<double>();
                 List<double> importRatios = new List<double>();
                 List<double> values = new List<double>();
+                List<double> valuesMass = new List<double>();
 
                 // FreedomOfAssociation from LabourExploitationRisk 
                 int freedomVar = labourRisk.FreedomOfAssociation;
@@ -61,21 +62,21 @@ namespace BH.Engine.Geometry
                     massesPerRatio.Add(mass * ratios[i]);
 
                     // Put all of the values into a list that can be added together
-                    values.Add(freedomVar * massesPerRatio[i] * importRatios[i]);
+                    values.Add(freedomVar * ratios[i] * importRatios[i]);
+
+                    valuesMass.Add(values[i] * massesPerRatio[i]);
                 }
 
-                // Sum the list
-                return values.Sum();
+                // Return the list of Values modified by the Mass data found within the assembly
+                return valuesMass;
             }
             else
             {
                 Base.Compute.RecordError("You must provide the same number of ratios for the number of materials. Returning NaN.");
-                return double.NaN;
+                return new List<double>();
             }
         }
-
         /***************************************************/
-
     }
 }
 
