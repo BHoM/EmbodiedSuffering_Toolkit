@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Base.Attributes;
+using BH.oM.Base;
 using BH.oM.EmbodiedSuffering.Elements;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,25 +41,27 @@ namespace BH.Engine.EmbodiedSuffering
         [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each Material you provide.")]
         [Input("importCountry", "The country to which the material is being imported.")]
         [Input("importSourceType", "Control for if the import source should be by cost, mass or any.")]
-        [Output("quantity", "")]
-        public static double FreedomOfAssociation(List<Material> materials, List<double> ratios, Country importCountry = Country.UnitedStatesOfAmerica, ImportSourceType importSourceType = ImportSourceType.ByMass)
+        [MultiOutput(0,"freedom", "")]
+        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(2, "missingRatio", "The total ratio not included due to missing FreedomOfAssociation values for the particular country.")]
+        public static Output<double, List<Country>, double> FreedomOfAssociation(List<Material> materials, List<double> ratios, Country importCountry = Country.UnitedStatesOfAmerica, ImportSourceType importSourceType = ImportSourceType.ByMass)
         {
             if (materials.Count != ratios.Count)
             {
                 Base.Compute.RecordError("You must provide the same number of ratios for the number of Material. Returning NaN.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             if (materials.Count == 0)
             {
                 Base.Compute.RecordError("No Material provided. NaN value returned.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             List<MaterialImportSources> importSources = materials.Select(x => x.MaterialImportSource(importCountry, importSourceType)).ToList();
 
             if (importSources.Any(x => x == null))
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
 
             return FreedomOfAssociation(importSources, ratios);
         }
@@ -68,19 +71,21 @@ namespace BH.Engine.EmbodiedSuffering
         [Description("Calculate the FreedomOfAssociation for a set of provided MaterialImportSources.")]
         [Input("materialImportSources", "Material Import Sources objects. Please provide a ratio summary for each material specified.")]
         [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each MaterialImportSources you provide.")]
-        [Output("quantity", "")]
-        public static double FreedomOfAssociation(List<MaterialImportSources> materialImportSources, List<double> ratios)
+        [MultiOutput(0, "freedom", "")]
+        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(2, "missingRatio", "The total ratio not included due to missing FreedomOfAssociation values for the particular country.")]
+        public static Output<double, List<Country>, double> FreedomOfAssociation(List<MaterialImportSources> materialImportSources, List<double> ratios)
         {
             if (materialImportSources.Count != ratios.Count)
             {
                 Base.Compute.RecordError("You must provide the same number of ratios for the number of MaterialImportSources. Returning NaN.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             if (materialImportSources.Count == 0)
             {
                 Base.Compute.RecordError("No materialImportSources provided. NaN value returned.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             double value = 0;
@@ -89,41 +94,56 @@ namespace BH.Engine.EmbodiedSuffering
             if (ratiosSum == 0)
             {
                 Engine.Base.Compute.RecordError("Total ratios are summing to 0. Unable to compute Freedom of Association value. Raturning NaN.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             if (Math.Abs(1 - ratiosSum) > 0.01)    //Ratios provided is less that 99%, raise warning
                 Engine.Base.Compute.RecordWarning($"Ratios provided make up {ratiosSum}, Value returned will be weighted as if the total ratios sum equals 1.");
 
+            HashSet<Country> missingCountries = new HashSet<Country>();
+            double missingRatio = 0;
             for (int i = 0; i < materialImportSources.Count; i++)
             {
-                double freedom = materialImportSources[i].FreedomOfAssociation();
-                if (double.IsNaN(freedom))  //Unable to get the values out from at least one MaterialImportSource. Abort.
-                    return double.NaN;
+                Output<double, List<Country>, double> singleItemFreedom = materialImportSources[i].FreedomOfAssociation();
+                
+                value += singleItemFreedom.Item1 * ratios[i];
+                missingRatio += singleItemFreedom.Item3 * ratios[i];
 
-                value += freedom * ratios[i];
+                foreach (Country country in singleItemFreedom.Item2)
+                {
+                    missingCountries.Add(country);
+                }
             }
 
-            return value / ratiosSum;
+            value = value / ratiosSum;
+            missingRatio = missingRatio / ratiosSum;
+            return new Output<double, List<Country>, double>
+            {
+                Item1 = value,
+                Item2 = missingCountries.ToList(),
+                Item3 = missingRatio
+            };
         }
 
         /***************************************************/
 
         [Description("Gets the Freedom of association value from a MaterialImportSources. The value will be weighted based on the ratios of the importing countries.")]
         [Input("materialImportSource", "The material import source to extract the freedom of association value for.")]
-        [Output("quantity", "")]
-        public static double FreedomOfAssociation(this MaterialImportSources materialImportSource)
+        [MultiOutput(0, "freedom", "")]
+        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(2, "missingRatio", "The total ratio not included due to missing FreedomOfAssociation values for the particular country.")]
+        public static Output<double, List<Country>, double> FreedomOfAssociation(this MaterialImportSources materialImportSource)
         {
             if (materialImportSource == null)
             {
                 Engine.Base.Compute.RecordError("Cannot get the freedom of association value from a null MaterialImportSources.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             if (materialImportSource.ExportCountries.Count != materialImportSource.ImportRatios.Count)
             {
                 Engine.Base.Compute.RecordError("Import ratio counts need to be the same as export country count.");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = new List<Country>(), Item3 = 0 };
             }
 
             Dictionary<Country, int> freedomOfAssociations = Query.ITUCFreedomOfAssociationDictionary();
@@ -155,7 +175,7 @@ namespace BH.Engine.EmbodiedSuffering
             if (totalRatioUsed == 0)
             {
                 Base.Compute.RecordError($"No freedom of association values found for any of the export countries in the provided {nameof(MaterialImportSources)} for the import country {materialImportSource.ImportCountry} for material of type {materialImportSource.Material}");
-                return double.NaN;
+                return new Output<double, List<Country>, double> { Item1 = double.NaN, Item2 = missingCountries, Item3 = 1.0 };
             }
 
             if (missingCountries.Count != 0)
@@ -164,7 +184,15 @@ namespace BH.Engine.EmbodiedSuffering
             if (Math.Abs(1 - totalRatioUsed) > 0.01)   //Less than 99% used
                 Base.Compute.RecordWarning($"The freedom of association value returned from the {nameof(MaterialImportSources)} for the import country {materialImportSource.ImportCountry} for material of type {materialImportSource.Material} is based on a total of {totalRatioUsed * 100}% of the import ratios.");
 
-            return value / totalRatioUsed;
+            value = value / totalRatioUsed;
+            double ratioMissed = missingRatio / (missingRatio + totalRatioUsed);    //Normalise the missing ratio in case of all ratios not summing to 1.
+
+            return new Output<double, List<Country>, double>
+            {
+                Item1 = value,
+                Item2 = missingCountries,
+                Item3 = ratioMissed
+            };
         }
 
         /***************************************************/
