@@ -179,7 +179,7 @@ namespace BH.Engine.EmbodiedSuffering
             }
 
             if (missingCountries.Count != 0)
-                Base.Compute.RecordWarning($"No freedom of association values available for the following countries {string.Join(",", missingCountries)}, making up {missingRatio * 100}% of the {nameof(MaterialImportSources)} for the import country {materialImportSource.ImportCountry} for material of type {materialImportSource.Material}.");
+                Base.Compute.RecordWarning($"No freedom of association values available for the following countries {string.Join(", ", missingCountries)}, making up {missingRatio * 100}% of the {nameof(MaterialImportSources)} for the import country {materialImportSource.ImportCountry} for material of type {materialImportSource.Material}.");
 
             if (Math.Abs(1 - totalRatioUsed) > 0.01)   //Less than 99% used
                 Base.Compute.RecordWarning($"The freedom of association value returned from the {nameof(MaterialImportSources)} for the import country {materialImportSource.ImportCountry} for material of type {materialImportSource.Material} is based on a total of {totalRatioUsed * 100}% of the import ratios.");
