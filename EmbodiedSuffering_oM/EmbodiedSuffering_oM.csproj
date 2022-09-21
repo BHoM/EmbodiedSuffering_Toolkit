@@ -7,7 +7,7 @@
     <ProjectGuid>{25363611-C7EA-4F95-A84A-586C2320F9F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.oM.External.EmbodiedSuffering</RootNamespace>
+    <RootNamespace>BH.oM.EmbodiedSuffering</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\Enums\Country.cs" />
+    <Compile Include="Elements\Enums\ImportSourceType.cs" />
     <Compile Include="Elements\LabourExploitationRisk.cs" />
     <Compile Include="Elements\MaterialImportSources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
