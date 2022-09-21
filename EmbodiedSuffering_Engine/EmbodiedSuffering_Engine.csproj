@@ -51,6 +51,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Library_Engine">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Reflection_Engine">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
@@ -68,7 +71,6 @@
   <ItemGroup>
     <Folder Include="Create\" />
     <Folder Include="Modify\" />
-    <Folder Include="Query\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmbodiedSuffering_oM\EmbodiedSuffering_oM.csproj">
@@ -79,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\FreedomOfAssociation.cs" />
+    <Compile Include="Query\ITUCFreedomOfAssociation.cs" />
+    <Compile Include="Query\MaterialImportSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
