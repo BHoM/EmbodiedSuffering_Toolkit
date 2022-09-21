@@ -32,13 +32,13 @@ namespace BH.oM.EmbodiedSuffering.Elements
         [Description("The name of the material that is imported to a particular country from other countries.")]
         public virtual Material Material { get; set; } = Material.Undefined;
 
-        [Description("List of countries from which the material was imported.")]
+        [Description("List of countries from which the material was imported. Count should match the import ratios.")]
         public virtual List<Country> ExportCountries { get; set; } = new List<Country>();
 
-        [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is responsible for 50% of the imports of steel to a particular country that value would be 0.5. The values do not necessarily need to add to 1.0.")]
-        public virtual double ImportRatios { get; set; } = double.NaN;
+        [Description("List of material import ratios from each country. For example, if Brazil is the sole country of import for timber the value would be 1.0, if the United Kingdom is responsible for 50% of the imports of steel to a particular country that value would be 0.5. The values do not necessarily need to add to 1.0. Count should match the ExportCountries.")]
+        public virtual List<double> ImportRatios { get; set; } = new List<double>();
 
         [Description("The name of the country in which the imported materials are utilised.")]
-        public virtual Country ImportCountry { get; set; } = Country.Undefined; // Wouldn't this need to be a list to match the possibility of multiple import ratios? 
+        public virtual Country ImportCountry { get; set; } = Country.Undefined;
     }
 }
