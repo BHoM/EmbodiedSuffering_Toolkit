@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\FreedomOfAssociation.cs" />
+    <Compile Include="Query\GlobalSlaveryIndex.cs" />
     <Compile Include="Query\ITUCFreedomOfAssociation.cs" />
     <Compile Include="Query\MaterialImportSource.cs" />
   </ItemGroup>
