@@ -51,12 +51,28 @@ namespace BH.Engine.EmbodiedSuffering
         public static Dictionary<Country, double> GlobalSlaveryIndexDictionary()
         {
             if (m_globalSlaveryIndex != null)
+            {
+                DuplicateCountriesWarning();
                 return m_globalSlaveryIndex;
+            }
 
             List<LabourExploitationRisk> labourRisk = GlobalSlaveryIndex();
 
-            m_globalSlaveryIndex = labourRisk.ToDictionary(x => x.Country, x => x.VictimsOfModernSlavery);
+            m_duplicateGSICountries = labourRisk.GroupBy(x => x.Country).Where(x => x.Count() > 1).Select(x => x.Key).ToList();
+
+            DuplicateCountriesWarning();
+            m_globalSlaveryIndex = labourRisk.GroupBy(x => x.Country).ToDictionary(x => x.Key, x => x.Average(y => y.VictimsOfModernSlavery));
             return m_globalSlaveryIndex;
+        }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static void DuplicateCountriesWarning()
+        {
+            if (m_duplicateGSICountries.Count > 0)
+                BH.Engine.Base.Compute.RecordWarning($"Multiple records in GlobalSlaveryIndex for the following countries {string.Join(", ", m_duplicateGSICountries)}. Average values in dataset for those countries returned.");
         }
 
         /***************************************************/
@@ -64,6 +80,7 @@ namespace BH.Engine.EmbodiedSuffering
         /***************************************************/
 
         private static Dictionary<Country, double> m_globalSlaveryIndex = null;
+        private static List<Country> m_duplicateGSICountries;
 
         /***************************************************/
     }
