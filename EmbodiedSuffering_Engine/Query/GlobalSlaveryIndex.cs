@@ -36,8 +36,8 @@ namespace BH.Engine.EmbodiedSuffering
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the Data for Freedom of Association by country based on data from Global Slavery Index.")]
-        [Output("labourRisk", "The LabourExploitationRisk with freedom of association values based on data from ITUC.")]
+        [Description("Gets the Data for VictimsOfModernSlavery by country based on data from Global Slavery Index.")]
+        [Output("labourRisk", "The LabourExploitationRisk with freedom of association values based on data from GSI.")]
         public static List<LabourExploitationRisk> GlobalSlaveryIndex()
         {
             string datasetPath = "EmbodiedSuffering\\LabourExploitationRisk\\2018GlobalSlaveryIndex";
@@ -46,7 +46,7 @@ namespace BH.Engine.EmbodiedSuffering
 
         /***************************************************/
 
-        [Description("Gets the Data for Freedom of Association by country based on data from Global Slavery Index as a dictionary with keys as countries and values as the VictimsOfModernSlavery.")]
+        [Description("Gets the Data for VictimsOfModernSlavery by country based on data from Global Slavery Index as a dictionary with keys as countries and values as the VictimsOfModernSlavery.")]
         [Output("slaveryVictims", "The VictimsOfModernSlavery with per country from Global Slavery Index.")]
         public static Dictionary<Country, double> GlobalSlaveryIndexDictionary()
         {
