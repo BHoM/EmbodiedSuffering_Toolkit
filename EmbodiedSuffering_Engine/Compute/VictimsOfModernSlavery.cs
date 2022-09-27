@@ -36,13 +36,13 @@ namespace BH.Engine.EmbodiedSuffering
         /****   Public Methods                          ****/
         /***************************************************/
 
-        [Description("Calculate the VictimsOfModernSlavery based on the average import ratios to the specified country for a set of provided Materials and Ratios..")]
+        [Description("Calculate the VictimsOfModernSlavery based on the average import ratios to the specified country for a set of provided Materials and Ratios.")]
         [Input("materials", "Material to be used. Average values for import ratios of the material to the selected import country will be queried from datasets. Please provide a ratio summary for each material specified.")]
         [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each Material you provide.")]
         [Input("importCountry", "The country to which the material is being imported.")]
-        [Input("importSourceType", "Control for if the import source should be by cost, mass or any.")]
+        [Input("importSourceType", "Control for if the import source should be by cost, mass or the average value of cost and mass.")]
         [MultiOutput(0,"victims", "The prevalence of individuals involved in modern slavery, measured in victims per 1000 population.")]
-        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(1, "missingCountries", "Countries from which no data is avialable.")]
         [MultiOutput(2, "missingRatio", "The total ratio not included due to missing VictimsOfModernSlavery values for the particular country.")]
         public static Output<double, List<Country>, double> VictimsOfModernSlavery(List<Material> materials, List<double> ratios, Country importCountry = Country.UnitedStatesOfAmerica, ImportSourceType importSourceType = ImportSourceType.ByMass)
         {
@@ -69,10 +69,10 @@ namespace BH.Engine.EmbodiedSuffering
         /***************************************************/
 
         [Description("Calculate the VictimsOfModernSlavery for a set of provided MaterialImportSources.")]
-        [Input("materialImportSources", "Material Import Sources objects. Please provide a ratio summary for each material specified.")]
-        [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each MaterialImportSources you provide.")]
+        [Input("materialImportSources", "MaterialImportSources objects. Please provide a ratio summary for each material specified.")]
+        [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each MaterialImportSources object you provide.")]
         [MultiOutput(0, "victims", "The prevalence of individuals involved in modern slavery, measured in victims per 1000 population.")]
-        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(1, "missingCountries", "Countries from which no data is available.")]
         [MultiOutput(2, "missingRatio", "The total ratio not included due to missing VictimsOfModernSlavery values for the particular country.")]
         public static Output<double, List<Country>, double> VictimsOfModernSlavery(List<MaterialImportSources> materialImportSources, List<double> ratios)
         {
@@ -130,7 +130,7 @@ namespace BH.Engine.EmbodiedSuffering
         [Description("Gets the VictimsOfModernSlavery value from a MaterialImportSources. The value will be weighted based on the ratios of the importing countries.")]
         [Input("materialImportSource", "The material import source to extract the freedom of association value for.")]
         [MultiOutput(0, "victims", "The prevalence of individuals involved in modern slavery, measured in victims per 1000 population.")]
-        [MultiOutput(1, "missingCountries", "Contries from which no data is avialable.")]
+        [MultiOutput(1, "missingCountries", "Countries from which no data is avialable.")]
         [MultiOutput(2, "missingRatio", "The total ratio not included due to missing VictimsOfModernSlavery values for the particular country.")]
         public static Output<double, List<Country>, double> VictimsOfModernSlavery(this MaterialImportSources materialImportSource)
         {
