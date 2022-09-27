@@ -38,6 +38,7 @@ namespace BH.oM.EmbodiedSuffering.Elements
         Concrete,
         Copper,
         Glass,
+        Gypsum,
         Iron,
         Lithium,
         Plastics,
