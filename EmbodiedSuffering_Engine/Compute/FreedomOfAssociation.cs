@@ -72,7 +72,7 @@ namespace BH.Engine.EmbodiedSuffering
         [Input("materialImportSources", "Material Import Sources objects. Please provide a ratio summary for each material specified.")]
         [Input("ratios", "Ratios of material that make up the assembly. This list length must account for each MaterialImportSources you provide.")]
         [MultiOutput(0, "freedom", "")]
-        [MultiOutput(1, "missingCountries", "Countries from which no data is avialable.")]
+        [MultiOutput(1, "missingCountries", "Countries from which no data is available.")]
         [MultiOutput(2, "missingRatio", "The total ratio not included due to missing FreedomOfAssociation values for the particular country.")]
         public static Output<double, List<Country>, double> FreedomOfAssociation(List<MaterialImportSources> materialImportSources, List<double> ratios)
         {
