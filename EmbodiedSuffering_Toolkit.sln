@@ -1,13 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.547
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbodiedSuffering_Adapter", "EmbodiedSuffering_Adapter\EmbodiedSuffering_Adapter.csproj", "{A39F98EE-7F9B-4EAA-A8AC-55D549F742E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmbodiedSuffering_Adapter", "EmbodiedSuffering_Adapter\EmbodiedSuffering_Adapter.csproj", "{A39F98EE-7F9B-4EAA-A8AC-55D549F742E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbodiedSuffering_Engine", "EmbodiedSuffering_Engine\EmbodiedSuffering_Engine.csproj", "{5ED4C64D-0D36-46C6-92E4-50C8184491E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmbodiedSuffering_Engine", "EmbodiedSuffering_Engine\EmbodiedSuffering_Engine.csproj", "{5ED4C64D-0D36-46C6-92E4-50C8184491E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbodiedSuffering_oM", "EmbodiedSuffering_oM\EmbodiedSuffering_oM.csproj", "{25363611-C7EA-4F95-A84A-586C2320F9F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmbodiedSuffering_oM", "EmbodiedSuffering_oM\EmbodiedSuffering_oM.csproj", "{25363611-C7EA-4F95-A84A-586C2320F9F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
